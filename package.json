@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && yarn copy-assets",
-    "copy-assets": "xcopy /E /I src\\assets\\manifest\\* dist\\assets  && copy /Y serviceWorker.js dist",
+    "copy-assets": "xcopy /E /I src\\assets\\manifest\\* dist\\assets && xcopy /Y serviceWorker.js dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
