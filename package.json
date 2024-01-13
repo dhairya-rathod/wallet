@@ -5,8 +5,10 @@
   "type": "commonjs",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && yarn copy-assets",
+    "build-local": "tsc && vite build && yarn copy-assets",
     "copy-assets": "xcopy /E /I src\\assets\\manifest\\* dist\\assets && xcopy /Y serviceWorker.js dist",
+    "build": "tsc && vite build && yarn copy-assets-server",
+    "copy-assets-server": "cp -R src/assets/manifest/* dist/assets && cp serviceWorker.js dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
