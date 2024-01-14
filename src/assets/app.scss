@@ -1,0 +1,6 @@
+@import "./dark.scss";
+@media (prefers-color-scheme: light) {
+  @import "./light.scss";
+}
+
+@import "./header.scss";
