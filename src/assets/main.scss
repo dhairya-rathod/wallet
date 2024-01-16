@@ -1,4 +1,4 @@
-@import "./dark.scss";
+@import "./variable.scss";
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -68,16 +68,17 @@ button:focus-visible {
   flex-direction: column;
 }
 
-@media (prefers-color-scheme: light) {
-  @import "./light.scss";
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+// TODO: Light mode
+// @media (prefers-color-scheme: light) {
+//   @import "./light.scss";
+//   :root {
+//     color: #213547;
+//     background-color: #ffffff;
+//   }
+//   a:hover {
+//     color: #747bff;
+//   }
+//   button {
+//     background-color: #f9f9f9;
+//   }
+// }

@@ -1,6 +1,10 @@
-@import "./dark.scss";
-@media (prefers-color-scheme: light) {
-  @import "./light.scss";
+@import "./variable.scss";
+
+.wallet-layout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
 }
 
 @import "./header.scss";

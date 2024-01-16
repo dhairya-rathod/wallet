@@ -1,60 +1,49 @@
-import Header from "./component/UI/Header";
+import { useState, lazy, Suspense, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import Layout from "./component/Layout";
+import NoMatch from "./component/NoMatch";
+const Home = lazy(() => import("./pages/Home"));
 
 import "./assets/app.scss";
+import { initDB } from "./utils/db";
+
+const LazyRoute = ({ children }: { children: React.JSX.Element }) => {
+  return <Suspense fallback={<>Loading...</>}>{children}</Suspense>;
+};
 
 function App() {
-  // const [isDBReady, setIsDBReady] = useState<boolean>(false);
+  const [isDbReady, setIsDbReady] = useState<boolean>(false);
 
-  // const handleDb = async (): Promise<void> => {
-  //   const status = await initDB();
-  //   setIsDBReady(status);
-  // };
+  useEffect(() => {
+    async function init() {
+      const isReady: boolean = await initDB();
+      setIsDbReady(isReady);
+    }
 
-  // const handleAddRecords = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+    init();
+  }, []);
 
-  //   const target = e.target as typeof e.target & {
-  //     title: { value: string };
-  //     description: { value: string };
-  //     amount: { value: number };
-  //     dateAndTime: { value: string };
-  //   };
-
-  //   const title = target.title.value;
-  //   const description = target.description.value;
-  //   const amount = target.amount.value;
-  //   const dateAndTime = target.dateAndTime.value;
-  //   // we must pass an Id since it's our primary key declared in our createObjectStoreMethod  { keyPath: 'id' }
-  //   const id = Date.now();
-
-  //   try {
-  //     await addData(Stores.Transactions, {
-  //       id,
-  //       title,
-  //       description,
-  //       amount,
-  //       dateAndTime,
-  //     });
-  //   } catch (err: unknown) {
-  //     if (err instanceof Error) {
-  //       console.log("TCL ~ handleAddRecords ~ err:", err.message);
-  //       // setError(err.message);
-  //     } else {
-  //       console.log("TCL ~ handleAddRecords ~ Something went wrong:");
-  //       // setError("Something went wrong");
-  //     }
-  //   }
-  // };
-
-  // const handleGetUsers = async () => {
-  //   const users = await getStoreData<Transaction>(Stores.Transactions);
-  //   console.log("TCL ~ handleGetUsers ~ users:", users);
-  // };
+  if (!isDbReady) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="app">
-      <Header title="Transactions" />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route
+          index
+          element={
+            <LazyRoute>
+              <Home />
+            </LazyRoute>
+          }
+        />
+        {/* <Route path="add" element={<AddTransaction />} />
+        <Route path="edit/:transactionId" element={<EditTransaction />} /> */}
+        <Route path="*" element={<NoMatch />} />
+      </Route>
+    </Routes>
   );
 }
 
